@@ -1,0 +1,306 @@
+body,
+ul,
+dt,
+dd{
+  margin: 0px;
+  padding: 0px;
+}
+
+.wrap{
+  /* 固定定位，以浏览器窗口作为参照物 */
+  position: fixed;  
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url("image/bg.jpg") no-repeat;
+  background-size: 100% 100%;
+}
+
+.play_wrap{
+  width: 800px;
+  height: 544px;
+  position: fixed;
+  left: 50%;
+  top: 50%; 
+  /* 偏移量（div高宽的一半使其垂直水平居中）*/
+  margin-left: -400px;
+  margin-top: -272px;
+}
+
+.search_bar{
+  height: 60px;
+  background-color: #1eacda;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  /* 弹性盒 */
+  display: flex;
+  align-items: center;
+  /* space-between:子元素将平均分布在行里 */
+  justify-content: space-between;
+  position: relative;
+  /* z-index: 11; */
+}
+
+.search_bar img {
+  margin-left: 23px;
+}
+
+.search_bar input{
+  margin-right: 23px;
+  width: 296px;
+  height: 34px;
+  border-radius: 17px;
+  /* 265px是控制背景图片水平方向的位置，center是控制垂直方向的位置 */
+  background: url("image/zoom.png") 265px center no-repeat
+    rgba(255, 255, 255, 0.45);
+  /* text-indent 属性规定文本块中首行文本的缩进*/ 
+  text-indent: 15px;
+  /* outline （轮廓）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用 */
+  outline: none;
+}
+
+.center_con{
+  height: 435px;
+  background-color:  rgba(255, 255, 255, 0.5);
+  display: flex;
+  position: relative;
+}
+
+.song_wrapper{
+  width: 200px;
+  height: 435px;
+  /* box-sizing:定义盒子的宽度值和高度值是否包含元素的内
+  填充和边框，content-box表示不包含，border-box表示包含。 */
+  box-sizing: border-box;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  padding: 10px;
+  z-index: 1;
+}
+
+.song_list{
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 滚动条自定义样式(兼容性不高) */
+.song_list::-webkit-scrollbar {
+  display: none;
+}
+
+.song_list li{
+  list-style: none;
+  font-size: 12px;
+  color: #333;
+  height: 40px;
+  width: 580px;
+  padding-left: 10px;
+  display: flex;
+  /* flex-wrap:如何换行（默认不换行）wrap换行 */
+  flex-wrap: wrap;
+  /* align-items属性定义项目在交叉轴上如何对齐。 */
+  align-items: center;
+}
+
+/* Odd 和 even 是可用于匹配下标是奇数或偶数的子元素的关键词（第一个子元素的下标是 1） */
+.song_list li:nth-child(odd){
+  background-color:rgba(240, 240, 240, 0.3);
+}
+
+.song_list li a{
+  display: block;
+  width: 139px;
+  text-decoration: none;
+  color: black;
+}
+
+.song_list li a img{
+  width: 17px;
+  height: 17px;
+}
+.song_list li a b {
+  font-weight: normal;
+  font-size: 14px;
+  width: 122px;
+  overflow: hidden;
+  /* 文本超出用什么方式表示，ellipsis省略号 */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song_list li span {
+  width: 23px;
+  height: 17px;
+  margin-right: 50px;
+}
+.song_list li span i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: url("image/table.png") left -48px no-repeat;
+}
+.player_con {
+  width: 400px;
+  height: 435px;
+  position: absolute;
+  left: 200px;
+  top: 0px;
+}
+.disc {
+  position: absolute;
+  left: 73px;
+  top: 60px;
+  z-index: 9;
+  cursor: pointer;
+}
+.cover {
+  position: absolute;
+  left: 125px;
+  top: 112px;
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+  z-index: 8;
+}
+.comment_wrapper {
+  width: 180px;
+  height: 435px;
+  list-style: none;
+  position: absolute;
+  left: 600px;
+  top: 0px;
+  padding: 25px 10px;
+}
+.comment_wrapper .title {
+  position: absolute;
+  top: 0;
+  margin-top: 10px;
+}
+.comment_wrapper .comment_list {
+  overflow: auto;
+  height: 410px;
+}
+.comment_wrapper .comment_list::-webkit-scrollbar {
+  display: none;
+}
+.comment_wrapper dl {
+  padding-top: 10px;
+  padding-left: 55px;
+  position: relative;
+  margin-bottom: 20px;
+}
+.comment_wrapper dt {
+  position: absolute;
+  left: 4px;
+  top: 10px;
+}
+.comment_wrapper dt img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+.comment_wrapper dd {
+  font-size: 12px;
+}
+
+.comment_wrapper .name {
+  font-weight: bold;
+  color: #333;
+  padding-top: 5px;
+}
+
+.comment_wrapper .detail {
+  color: #666;
+  margin-top: 5px;
+  line-height: 18px;
+}
+.audio_con {
+  height: 50px;
+  background-color: #f1f3f4;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.myaudio {
+  width: 800px;
+  height: 40px;
+  margin-top: 5px;
+  outline: none;
+  background-color: #f1f3f4;
+}
+/* 旋转的动画 */
+@keyframes Rotate {
+  from {
+    transform: rotateZ(0);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+/* 旋转的类名 */
+.autoRotate {
+  animation-name: Rotate;
+  /* 定义动画的播放次数，infinite：无限次 */
+  animation-iteration-count: infinite;
+  /* 规定动画正在运行还是暂停 paused/running*/
+  animation-play-state: paused;
+  /* 速度曲线定义动画从一套 CSS 样式变为另一套所用的时间，linear	动画从头到尾的速度是相同的。 */
+  animation-timing-function: linear;
+  /* 定义动画完成一个周期所需要的时间 */
+  animation-duration: 5s;
+}
+/* 是否正在播放 */
+.player_con.playing .disc,
+.player_con.playing .cover {
+  animation-play-state: running;
+}
+
+.play_bar {
+  position: absolute;
+  left: 200px;
+  top: -10px;
+  z-index: 10;
+  /* 默认停止播放音乐，播放杆 转上去 */
+  transform: rotate(-25deg);
+  transform-origin: 12px 12px;
+  transition: 1s;
+}
+/* 播放杆 转回去 */
+.player_con.playing .play_bar {
+  transform: rotate(0);
+}
+/* 左边的分割线（歌曲列表与封面间） */
+.switch_btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+.right_line {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.video_con video {
+  position: fixed;
+  width: 800px;
+  height: 546px;
+  left: 50%;
+  top: 50%;
+  margin-top: -273px;
+  transform: translateX(-50%);
+  z-index: 990;
+}
+.video_con .mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 980;
+  background-color: rgba(0, 0, 0, 0.8);
+}
