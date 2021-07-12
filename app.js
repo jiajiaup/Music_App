@@ -16,14 +16,19 @@ var app = new Vue({
         musicCover:"",
         //歌曲评论
         hotComments:[],
-        // mv播放状态
-        isPlaying:false,
         // 遮罩层显示状态
         isShow:false,
         // mv地址
         mvUrl:"",
-        //音乐播放状态
-        isPlaying:false
+        //音乐播放状态,mv播放状态
+        isPlaying:false,
+		
+		//天气预报
+		city:'湛江',
+		weatherList:[], //五天天气列表
+		type:'',//当天天气类型
+		temperature:'',//当天天气温度
+		month:'' //月份
     },
     methods:{
         //歌曲搜索
@@ -33,7 +38,6 @@ var app = new Vue({
             .then(function(response){
                 //console.log(response);
                 that.musicList = response.data.result.songs;
-
             },function(err){
                 console.log(err);
             })
@@ -72,7 +76,7 @@ var app = new Vue({
             .then(function(response){
                 //console.log(response.data.data.url);
                 that.isShow = true; //显示遮罩层 
-                that.musicUrl = ""; //防止当前播放音乐的干扰（重复播放有杂音）
+				that.$refs.audio.pause();//暂停当前播放音乐（重复播放有杂音）
                 that.mvUrl = response.data.data.url;
             },function(err){console.log(err);})
         },
@@ -91,7 +95,46 @@ var app = new Vue({
             this.isShow = false;
             //关闭之后,视频也不再播放了
 			this.$refs.video.pause();
-            // this.mvUrl = "";
-        }
+        },
+		
+		//搜索天气并赋值
+		searchWeather:function(){
+			var d = new Date();
+			this.month = (d.getMonth()+1)+'月';
+		    //console.log(this.city);
+		    var that = this;   //回调函数中this已经改变 
+		    axios.get('http://wthrcdn.etouch.cn/weather_mini?city='+this.city)
+		    .then(function(response){
+		        console.log(response)
+		        that.weatherList = response.data.data.forecast;
+			    // 给天气列表加上对应天气图标
+				for(var i = 0; i<that.weatherList.length; i++)
+					{	
+						that.weatherList[i].img = "../音乐播放器/image/" + that.weatherList[i].type + ".png";
+						that.weatherList[i].high = that.weatherList[i].high.substr(3)
+						that.weatherList[i].low = that.weatherList[i].low.substr(3)
+					}
+				console.log(that.weatherList);
+				that.temperature = response.data.data.wendu + '℃';
+				that.type = that.weatherList[0].img;
+		    },function(err){
+		        console.log(err);
+		    })
+		},
     },
+	//设置监听isPlaying的变化，让用户点击唱片图标也可以进行歌曲的暂停与播放
+	watch:{
+		isPlaying (news,olds){
+			if(news == true){
+				this.$refs.audio.play();
+			}
+			else{
+				this.$refs.audio.pause();
+			}
+		}
+	},
+	//利用钩子函数在创建实例后就搜索湛江天气
+	created() {
+		this.searchWeather();
+	}
 })

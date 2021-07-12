@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app.css">
-    <title>私人音乐播放器</title>
+    <title>音乐播放器</title>
 </head>
 <body>
     <style> [v-cloak] { display: none; } </style>
@@ -14,8 +14,27 @@
         <div class="play_wrap" id="player">
         <div class="search_bar">
             <img src="image/player_title.png" alt=""/>
+			<!-- 天气预报 -->
+			<div class="weather">
+				<div class="show_weather" v-cloak>
+					<div class="location">{{ city }}</div>
+					<div><img class="weather_img" :src="type"></div>
+					<div class="temperature">{{ temperature }}</div>
+				</div>
+				<div class="future">
+					<div class="search_weather"><input type="text" @keyup.enter="searchWeather" v-model="city"/></div>
+					<ul class="future_weather">
+						<li v-for="item in weatherList">
+							<div class="info_date"><span>{{ month+item.date }}</span></div>
+							<div><img class="weather_img" :src="item.img"></div>
+							<div>{{ item.low }}~{{ item.high }}</div>
+							<div>{{ item.fengxiang }}</div>
+						</li>
+					</ul>
+				</div>
+			</div>
             <!-- 搜索歌曲 -->
-            <input type="text" autofocus="autofocus" autocomplete="off" placeholder="想听什么" v-model="query" @keyup.enter="searchMusic"/> 
+            <input type="text" placeholder="搜索音乐" v-model="query" @keyup.enter="searchMusic"/> 
             <!-- autocomplete 属性规定输入字段是否应该启用自动完成功能。
                 自动完成允许浏览器预测对字段的输入。当用户在字段开始键入时，
                 浏览器基于之前键入过的值，应该显示出在字段中填写的选项。 -->
@@ -28,7 +47,6 @@
                         <a href="javascript:;" @click="playMusic(item.id)">
                             <img src="image/play.png">
                             <b>{{ item.name }}</b> </a> 
-                        
                         <span><i v-if="item.mvid!=0" @click="playMv(item.mvid)"></i></span>
                         <!-- <i> 标签显示斜体文本效果。  歌曲mv图标 -->
                     </li>
@@ -40,7 +58,7 @@
             <!-- playing（播放旋转动画）是否作用于该div元素上 由isPlaying数据来决定，为true时作用，false时不作用。 -->
                 <img src="image/player_bar.png" class="play_bar">
                 <!-- 黑胶碟片 -->
-                <img src="image/disc.png" class="disc autoRotate" @click="isPlaying=!isPlaying">
+                <img src="image/disc.png" class="disc autoRotate">
                 <!-- 表示有disc和autoRotate两个类 -->
                 <img :src="musicCover==''?'image/cover.png':musicCover" class="cover autoRotate">
             </div>
